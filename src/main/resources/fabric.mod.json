@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "license": "MIT",
+  "id": "scarecrows",
+  "version": "${version}",
+
+  "name": "Scarecrows",
+  "description": "Scarecrows that scare your crows and the crows are scared",
+  "icon": "pack.png",
+
+  "authors": [
+    "Team Frender"
+  ],
+  "contributors": [],
+  "contact": {
+    "homepage": "https://scarecrows.frenderman.com",
+    "sources": "https://github.com/andantedevs/scarecrows"
+  },
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.frenderman.scarecrows.Scarecrows"
+    ],
+    "server": []
+  },
+  "mixins": [
+    "scarecrows.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.0",
+    "fabric": ">=0.28.0",
+    "minecraft": ">=1.16.2"
+  }
+}
