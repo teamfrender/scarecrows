@@ -1,5 +1,6 @@
 package com.frenderman.scarecrows.entity.scarecrow;
 
+import com.frenderman.scarecrows.client.config.SCConfig;
 import com.frenderman.scarecrows.init.SCEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -19,9 +20,9 @@ public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntit
     }
 
     @Override
-    protected void setupTransforms(ScarecrowEntity entity, MatrixStack matrixStack, float f, float g, float h) {
-        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F - g));
-        float i = (float)(entity.world.getTime() - entity.lastHitTime) + h;
+    protected void setupTransforms(ScarecrowEntity entity, MatrixStack matrixStack, float animationProgress, float bodyYaw, float tickDelta) {
+        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F - bodyYaw));
+        float i = (float)(entity.world.getTime() - entity.lastHitTime) + tickDelta;
         if (i < 5.0F) {
             matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(MathHelper.sin(i / 1.5F * 3.1415927F) * 3.0F));
         }
@@ -35,25 +36,24 @@ public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntit
     }
 
     @Override
-    protected RenderLayer getRenderLayer(ScarecrowEntity entity, boolean bl, boolean bl2, boolean bl3) {
+    protected RenderLayer getRenderLayer(ScarecrowEntity entity, boolean showBody, boolean translucent, boolean showOutline) {
         if (!entity.isMarker()) {
-            return super.getRenderLayer(entity, bl, bl2, bl3);
+            return super.getRenderLayer(entity, showBody, translucent, showOutline);
         } else {
             Identifier identifier = this.getTexture(entity);
-            if (bl2) {
+            if (translucent) {
                 return RenderLayer.getEntityTranslucent(identifier, false);
             } else {
-                return bl ? RenderLayer.getEntityCutoutNoCull(identifier, false) : null;
+                return showBody ? RenderLayer.getEntityCutoutNoCull(identifier, false) : null;
             }
         }
     }
 
     @Override
     public Identifier getTexture(ScarecrowEntity entity) {
-        String modifier = "";
-        if (!((entity.world.getTime() - entity.lastHitTime) > 20) || !entity.isOnGround() || entity.isOnFire() || entity.isSubmergedInWater()) {
-            modifier = "sad";
-        }
+        boolean sadCrow = SCConfig.MISC.sadcrow.getBoolean() && (!entity.isOnGround() || !((entity.world.getTime() - entity.lastHitTime) > 20) || entity.isSubmergedInWater() || entity.isOnFire());
+
+        String modifier = sadCrow ? "sad" : "";
 
         return SCEntities.texture(ScarecrowEntity.id + "/" + ScarecrowEntity.id + (modifier.equals("") ? "" : "_" + modifier));
     }

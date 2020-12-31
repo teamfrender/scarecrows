@@ -22,10 +22,15 @@
     "main": [
       "com.frenderman.scarecrows.Scarecrows"
     ],
+
     "client": [
       "com.frenderman.scarecrows.ScarecrowsClient"
     ],
-    "server": []
+    "server": [],
+
+    "modmenu": [
+      "com.frenderman.scarecrows.ScarecrowsModMenu"
+    ]
   },
   "mixins": [
     "scarecrows.mixins.json"
