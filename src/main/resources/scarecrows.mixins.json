@@ -2,7 +2,9 @@
   "required": true,
   "package": "com.frenderman.scarecrows.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [],
+  "mixins": [
+    "PersistentProjectileEntityMixin"
+  ],
   "client": [],
   "server": [],
   "injectors": {
