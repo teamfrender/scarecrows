@@ -325,7 +325,9 @@ public class ScarecrowEntity extends LivingEntity {
     }
 
     private void playBreakSound() {
-        this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ARMOR_STAND_BREAK, this.getSoundCategory(), 1.0F, 1.0F);
+        for (SoundEvent soundEvent : new SoundEvent[]{ SoundEvents.ENTITY_ARMOR_STAND_BREAK, SoundEvents.BLOCK_GRASS_BREAK }) {
+            this.world.playSound(null, this.getX(), this.getY(), this.getZ(), soundEvent, this.getSoundCategory(), 1.0F, 1.0F);
+        }
     }
 
     @Override
