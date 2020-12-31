@@ -316,6 +316,7 @@ public class ScarecrowEntity extends LivingEntity {
 
     private void breakAndDropItem(DamageSource damageSource) {
         Block.dropStack(this.world, this.getBlockPos(), new ItemStack(SCItems.SCARECROW));
+        Block.dropStack(this.world, this.getBlockPos(), new ItemStack(Items.ARROW, this.getStuckArrowCount()));
         this.onBreak(damageSource);
     }
 
