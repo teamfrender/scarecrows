@@ -20,7 +20,7 @@ public class PersistentProjectileEntityMixin {
 
             int stuckArrowCount = scarecrowEntity.getStuckArrowCount();
             if (stuckArrowCount <= scarecrowEntity.getMaxStuckArrowCount() - 1) {
-                scarecrowEntity.setStuckArrowCount(stuckArrowCount + 1);
+                scarecrowEntity.setStuckArrowCount(stuckArrowCount);
                 $this.remove();
             }
         }
