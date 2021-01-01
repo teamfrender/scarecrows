@@ -1,6 +1,7 @@
 package com.frenderman.scarecrows.entity.scarecrow;
 
 import com.frenderman.scarecrows.init.SCItems;
+import com.frenderman.scarecrows.init.SCSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -22,7 +23,6 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
@@ -258,9 +258,7 @@ public class ScarecrowEntity extends LivingEntity {
     public void handleStatus(byte status) {
         if (status == 32) {
             if (this.world.isClient) {
-                for (SoundEvent soundEvent : new SoundEvent[]{ SoundEvents.ENTITY_ARMOR_STAND_HIT, SoundEvents.BLOCK_GRASS_FALL }) {
-                    this.world.playSound(this.getX(), this.getY(), this.getZ(), soundEvent, this.getSoundCategory(), 0.3F, 1.0F, false);
-                }
+                this.world.playSound(this.getX(), this.getY(), this.getZ(), SCSoundEvents.ENTITY_SCARECROW_HIT, this.getSoundCategory(), 0.3F, 1.0F, false);
                 this.lastHitTime = this.world.getTime();
             }
         } else {
@@ -326,9 +324,7 @@ public class ScarecrowEntity extends LivingEntity {
     }
 
     private void playBreakSound() {
-        for (SoundEvent soundEvent : new SoundEvent[]{ SoundEvents.ENTITY_ARMOR_STAND_BREAK, SoundEvents.BLOCK_GRASS_BREAK }) {
-            this.world.playSound(null, this.getX(), this.getY(), this.getZ(), soundEvent, this.getSoundCategory(), 1.0F, 1.0F);
-        }
+        this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SCSoundEvents.ENTITY_SCARECROW_BREAK, this.getSoundCategory(), 1.0F, 1.0F);
     }
 
     @Override
@@ -431,17 +427,17 @@ public class ScarecrowEntity extends LivingEntity {
 
     @Override
     protected SoundEvent getFallSound(int distance) {
-        return SoundEvents.ENTITY_ARMOR_STAND_FALL;
+        return SCSoundEvents.ENTITY_SCARECROW_FALL;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_ARMOR_STAND_HIT;
+        return SCSoundEvents.ENTITY_SCARECROW_HIT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_ARMOR_STAND_BREAK;
+        return SCSoundEvents.ENTITY_SCARECROW_BREAK;
     }
 
     @Override

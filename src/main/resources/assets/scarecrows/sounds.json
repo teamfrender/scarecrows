@@ -1,0 +1,23 @@
+{
+  "entity.scarecrow.break": {
+    "sounds": [
+      "scarecrows:entity/scarecrow/break1",
+      "scarecrows:entity/scarecrow/break2"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "entity.scarecrow.fall": {
+    "sounds": [
+      "scarecrows:entity/scarecrow/fall1",
+      "scarecrows:entity/scarecrow/fall2"
+    ],
+    "subtitle": "subtitles.scarecrows.entity.scarecrow.fall"
+  },
+  "entity.scarecrow.hit": {
+    "sounds": [
+      "scarecrows:entity/scarecrow/hit1",
+      "scarecrows:entity/scarecrow/hit2"
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  }
+}

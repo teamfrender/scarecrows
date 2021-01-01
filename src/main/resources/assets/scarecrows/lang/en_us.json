@@ -6,6 +6,8 @@
   "entity.scarecrows.scarecrow": "Scarecrow",
   "item.scarecrows.scarecrow": "Scarecrow",
 
+  "subtitles.scarecrows.entity.scarecrow.fall": "Scarecrow falls",
+
   "config.scarecrows.title": "Scarecrows",
   "config.scarecrows.category.misc": "Miscellaneous",
   "config.scarecrows.category.misc.sadcrow": "Sadcrow",
