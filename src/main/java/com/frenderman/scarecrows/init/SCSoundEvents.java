@@ -16,6 +16,8 @@ public class SCSoundEvents {
         return register("entity.scarecrow." + id);
     }
 
+    public SCSoundEvents() {}
+
     private static SoundEvent register(String id) {
         Identifier identifier = new Identifier(Scarecrows.MOD_ID, id);
         return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));

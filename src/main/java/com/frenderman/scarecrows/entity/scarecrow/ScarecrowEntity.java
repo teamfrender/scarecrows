@@ -1,5 +1,6 @@
 package com.frenderman.scarecrows.entity.scarecrow;
 
+import com.frenderman.scarecrows.tag.SCItemTags;
 import com.frenderman.scarecrows.init.SCItems;
 import com.frenderman.scarecrows.init.SCSoundEvents;
 import net.fabricmc.api.EnvType;
@@ -178,7 +179,7 @@ public class ScarecrowEntity extends LivingEntity {
             if (DamageSource.OUT_OF_WORLD.equals(source)) {
                 this.remove();
                 return false;
-            } else if (source.isProjectile()) {
+            } else if (source.isProjectile() || (source.getAttacker() instanceof LivingEntity && ((LivingEntity)source.getAttacker()).getMainHandStack().getItem().isIn(SCItemTags.WOODEN_TOOLS))) {
                 this.world.sendEntityStatus(this, (byte)32);
                 this.lastHitTime = this.world.getTime();
 
