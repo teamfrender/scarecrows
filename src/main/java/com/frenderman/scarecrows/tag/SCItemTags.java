@@ -7,7 +7,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class SCItemTags {
-    public static final Tag<Item> WOODEN_TOOLS = register("wooden_tools");
+    public static final Tag<Item> INEFFECTIVE_SCARECROW_DAMAGERS = register("ineffective_scarecrow_damagers");
 
     private static Tag<Item> register(String path) {
         return TagRegistry.item(new Identifier(Scarecrows.MOD_ID, path));

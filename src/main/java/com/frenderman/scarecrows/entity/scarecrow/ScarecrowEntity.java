@@ -179,7 +179,7 @@ public class ScarecrowEntity extends LivingEntity {
             if (DamageSource.OUT_OF_WORLD.equals(source)) {
                 this.remove();
                 return false;
-            } else if (source.isProjectile() || (source.getAttacker() instanceof LivingEntity && ((LivingEntity)source.getAttacker()).getMainHandStack().getItem().isIn(SCItemTags.WOODEN_TOOLS))) {
+            } else if (source.isProjectile() || (source.getAttacker() instanceof LivingEntity && ((LivingEntity)source.getAttacker()).getMainHandStack().getItem().isIn(SCItemTags.INEFFECTIVE_SCARECROW_DAMAGERS))) {
                 this.world.sendEntityStatus(this, (byte)32);
                 this.lastHitTime = this.world.getTime();
 
