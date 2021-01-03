@@ -11,6 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PersistentProjectileEntity.class)
 public class PersistentProjectileEntityMixin {
+    /**
+     * Increases a Scarecrow's stuck arrow count and removes self if the hit entity is a {@link ScarecrowEntity}.
+     */
     @Inject(method = "onEntityHit", at = @At("TAIL"))
     private void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         Entity hitEntity = entityHitResult.getEntity();

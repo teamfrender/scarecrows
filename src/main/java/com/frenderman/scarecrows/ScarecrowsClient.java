@@ -2,7 +2,6 @@ package com.frenderman.scarecrows;
 
 import static com.frenderman.scarecrows.Scarecrows.log;
 
-import com.frenderman.scarecrows.client.config.SCConfig;
 import com.frenderman.scarecrows.client.config.SCConfigManager;
 import com.frenderman.scarecrows.entity.scarecrow.ScarecrowEntityRenderer;
 import com.frenderman.scarecrows.init.SCEntities;

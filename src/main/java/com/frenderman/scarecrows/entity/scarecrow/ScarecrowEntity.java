@@ -13,7 +13,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
@@ -93,35 +92,6 @@ public class ScarecrowEntity extends LivingEntity {
     public void equipStack(EquipmentSlot slot, ItemStack stack) {}
 
     @Override
-    public boolean equip(int slot, ItemStack item) {
-        EquipmentSlot equipmentSlot7;
-        if (slot == 98) {
-            equipmentSlot7 = EquipmentSlot.MAINHAND;
-        } else if (slot == 99) {
-            equipmentSlot7 = EquipmentSlot.OFFHAND;
-        } else if (slot == 100 + EquipmentSlot.HEAD.getEntitySlotId()) {
-            equipmentSlot7 = EquipmentSlot.HEAD;
-        } else if (slot == 100 + EquipmentSlot.CHEST.getEntitySlotId()) {
-            equipmentSlot7 = EquipmentSlot.CHEST;
-        } else if (slot == 100 + EquipmentSlot.LEGS.getEntitySlotId()) {
-            equipmentSlot7 = EquipmentSlot.LEGS;
-        } else {
-            if (slot != 100 + EquipmentSlot.FEET.getEntitySlotId()) {
-                return false;
-            }
-
-            equipmentSlot7 = EquipmentSlot.FEET;
-        }
-
-        if (!item.isEmpty() && !MobEntity.canEquipmentSlotContain(equipmentSlot7, item) && equipmentSlot7 != EquipmentSlot.HEAD) {
-            return false;
-        } else {
-            this.equipStack(equipmentSlot7, item);
-            return true;
-        }
-    }
-
-    @Override
     public void writeCustomDataToTag(CompoundTag tag) {
         super.writeCustomDataToTag(tag);
 
@@ -180,10 +150,10 @@ public class ScarecrowEntity extends LivingEntity {
                 this.remove();
                 return false;
             } else if (source.isProjectile() || (source.getAttacker() instanceof LivingEntity && ((LivingEntity)source.getAttacker()).getMainHandStack().getItem().isIn(SCItemTags.INEFFECTIVE_SCARECROW_DAMAGERS))) {
-                this.world.sendEntityStatus(this, (byte)32);
+                this.world.sendEntityStatus(this, (byte)32); // treat as if damaged...
                 this.lastHitTime = this.world.getTime();
 
-                return false;
+                return false; // ...but don't actually damage
             } if (!this.isInvulnerableTo(source) && !this.invisible && !this.isMarker()) {
                 if (source.isExplosive()) {
                     this.onBreak(source);
@@ -201,10 +171,10 @@ public class ScarecrowEntity extends LivingEntity {
                     this.updateHealth(source, 4.0F);
                     return false;
                 } else {
-                    boolean bl = source.getSource() instanceof PersistentProjectileEntity;
-                    boolean bl2 = bl && ((PersistentProjectileEntity)source.getSource()).getPierceLevel() > 0;
-                    boolean bl3 = "player".equals(source.getName());
-                    if (!bl3 && !bl) {
+                    boolean isPersistentProjectile = source.getSource() instanceof PersistentProjectileEntity;
+                    boolean hasPiercing = isPersistentProjectile && ((PersistentProjectileEntity)source.getSource()).getPierceLevel() > 0;
+                    boolean sourceIsPlayer = "player".equals(source.getName());
+                    if (!sourceIsPlayer && !isPersistentProjectile) {
                         return false;
                     } else if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).abilities.allowModifyWorld) {
                         return false;
@@ -212,12 +182,12 @@ public class ScarecrowEntity extends LivingEntity {
                         this.playBreakSound();
                         this.spawnBreakParticles();
                         this.remove();
-                        return bl2;
+                        return hasPiercing;
                     } else {
-                        long l = this.world.getTime();
-                        if (l - this.lastHitTime > 5L && !bl) {
+                        long currentWorldTime = this.world.getTime();
+                        if (currentWorldTime - this.lastHitTime > 5L && !isPersistentProjectile) {
                             this.world.sendEntityStatus(this, (byte)32);
-                            this.lastHitTime = l;
+                            this.lastHitTime = currentWorldTime;
                         } else {
                             this.breakAndDropItem(source);
                             this.spawnBreakParticles();

@@ -19,6 +19,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
+    /**
+     * Practically all copied from {@link MinecraftClient}.
+     * Checks if the player has picked a Scarecrow, and sets their current, or closest available, hotbar slot to Scarecrow item.
+     */
     @Inject(method = "doItemPick", at = @At("HEAD"))
     private void doItemPick(CallbackInfo ci) {
         MinecraftClient $this = MinecraftClient.class.cast(this);
