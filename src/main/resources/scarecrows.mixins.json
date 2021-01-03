@@ -5,7 +5,9 @@
   "mixins": [
     "PersistentProjectileEntityMixin"
   ],
-  "client": [],
+  "client": [
+    "client.MinecraftClientMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
