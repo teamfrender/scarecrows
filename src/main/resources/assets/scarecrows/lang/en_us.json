@@ -1,0 +1,10 @@
+{
+  "mod.scarecrows.name": "Scarecrows",
+  "mod.scarecrows.description": "Scarecrows that scare your crows and the crows are scared",
+  "itemGroup.scarecrows": "Scarecrows",
+
+  "entity.scarecrows.scarecrow": "Scarecrow",
+  "item.scarecrows.scarecrow": "Scarecrow",
+
+  "subtitles.scarecrows.entity.scarecrow.fall": "Scarecrow falls"
+}

@@ -1,0 +1,31 @@
+modLoader = "javafml"
+loaderVersion = "[31,)"
+license = "https://github.com/teamfrender/scarecrows/blob/HEAD/LICENSE"
+
+[[mods]]
+  modId = "scarecrows"
+  displayName = "Scarecrows"
+  description='''
+    Scarecrows that scare your crows and the crows are scared
+  '''
+  authors = "Team Frender"
+  logoFile="pack.png"
+  
+  version = "${file.jarVersion}"
+  updateJSONURL="https://teamfrender.com/data/update/scarecrows.json"
+  
+  displayURL="https://scarecrows.teamfrender.com"
+  issueTrackerURL = "https://github.com/teamfrender/scarecrows/issues"
+  
+  [[ dependencies.scarecrows ]]
+  modId="forge"
+  mandatory=true
+  versionRange="[31.0,)"
+  ordering="NONE"
+  side="BOTH"
+  [[ dependencies.scarecrows ]]
+  modId="minecraft"
+  mandatory=true
+  versionRange="[1.16,)"
+  ordering="NONE"
+  side="BOTH"
