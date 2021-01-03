@@ -183,7 +183,7 @@ public class ScarecrowEntity extends LivingEntity {
                 this.world.sendEntityStatus(this, (byte)32);
                 this.lastHitTime = this.world.getTime();
 
-                return true;
+                return false;
             } if (!this.isInvulnerableTo(source) && !this.invisible && !this.isMarker()) {
                 if (source.isExplosive()) {
                     this.onBreak(source);

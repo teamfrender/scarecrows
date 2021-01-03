@@ -18,9 +18,9 @@ public class PersistentProjectileEntityMixin {
             PersistentProjectileEntity $this = PersistentProjectileEntity.class.cast(this);
             ScarecrowEntity scarecrowEntity = (ScarecrowEntity)hitEntity;
 
-            int stuckArrowCount = scarecrowEntity.getStuckArrowCount();
-            if (stuckArrowCount <= scarecrowEntity.getMaxStuckArrowCount() - 1) {
-                scarecrowEntity.setStuckArrowCount(stuckArrowCount);
+            int newStuckArrow = scarecrowEntity.getStuckArrowCount() + 1;
+            if (newStuckArrow <= scarecrowEntity.getMaxStuckArrowCount() ) {
+                scarecrowEntity.setStuckArrowCount(newStuckArrow);
                 $this.remove();
             }
         }
