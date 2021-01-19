@@ -12,6 +12,7 @@ public class SCSoundEvents {
     public static final SoundEvent ENTITY_SCARECROW_BREAK = createScarecrowSound("break");
     public static final SoundEvent ENTITY_SCARECROW_FALL = createScarecrowSound("fall");
     public static final SoundEvent ENTITY_SCARECROW_HIT = createScarecrowSound("hit");
+    public static final SoundEvent ENTITY_SCARECROW_FRENCHIFY = createScarecrowSound("frenchify");
     private static SoundEvent createScarecrowSound(String id) {
         return register("entity.scarecrow." + id);
     }

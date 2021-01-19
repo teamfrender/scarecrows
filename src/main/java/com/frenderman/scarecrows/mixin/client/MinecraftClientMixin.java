@@ -31,7 +31,7 @@ public class MinecraftClientMixin {
             if ($this.crosshairTarget.getType() == HitResult.Type.ENTITY) {
                 Entity entity = ((EntityHitResult)$this.crosshairTarget).getEntity();
                 if (entity instanceof ScarecrowEntity) {
-                    ItemStack pickedStack = new ItemStack(SCItems.SCARECROW);
+                    ItemStack pickedStack = new ItemStack(ScarecrowEntity.getDrops().get(((ScarecrowEntity) entity).getColor()));
                     PlayerInventory playerInventory = $this.player.inventory;
 
                     int slotIndexWithScarecrow = playerInventory.getSlotWithStack(pickedStack);

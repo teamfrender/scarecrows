@@ -2,7 +2,7 @@
   "parent": "scarecrows:recipes/root",
   "rewards": {
     "recipes": [
-      "scarecrows:scarecrow"
+      "scarecrows:blue_scarecrow"
     ]
   },
   "criteria": {
@@ -26,6 +26,16 @@
         ]
       }
     },
+    "has_wool": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:blue_wool"
+          }
+        ]
+      }
+    },
     "has_carved_pumpkin": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -39,13 +49,14 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "scarecrows:scarecrow"
+        "recipe": "scarecrows:blue_scarecrow"
       }
     }
   },
   "requirements": [
     [
       "has_stick",
+      "has_wool",
       "has_pumpkin",
       "has_carved_pumpkin",
       "has_the_recipe"

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "scarecrows:scarecrow",
+  "pattern": [
+    " # ",
+    "WCW",
+    " / "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:carved_pumpkin"
+    },
+    "C": {
+      "item": "minecraft:yellow_wool"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "scarecrows:yellow_scarecrow",
+    "count": 2
+  }
+}

@@ -1,8 +1,9 @@
 package com.frenderman.scarecrows.entity.scarecrow;
 
-import com.frenderman.scarecrows.tag.SCItemTags;
 import com.frenderman.scarecrows.init.SCItems;
 import com.frenderman.scarecrows.init.SCSoundEvents;
+import com.frenderman.scarecrows.tag.SCItemTags;
+import com.google.common.collect.Maps;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -16,16 +17,13 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -34,28 +32,56 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class ScarecrowEntity extends LivingEntity {
     public static final String id = "scarecrow";
 
+    private static final Map<DyeColor, ItemConvertible> DROPS = Util.make(Maps.newEnumMap(DyeColor.class), (enumMap) -> {
+        enumMap.put(DyeColor.WHITE, SCItems.WHITE_SCARECROW);
+        enumMap.put(DyeColor.ORANGE, SCItems.ORANGE_SCARECROW);
+        enumMap.put(DyeColor.MAGENTA, SCItems.MAGENTA_SCARECROW);
+        enumMap.put(DyeColor.LIGHT_BLUE, SCItems.LIGHT_BLUE_SCARECROW);
+        enumMap.put(DyeColor.YELLOW, SCItems.YELLOW_SCARECROW);
+        enumMap.put(DyeColor.LIME, SCItems.LIME_SCARECROW);
+        enumMap.put(DyeColor.PINK, SCItems.PINK_SCARECROW);
+        enumMap.put(DyeColor.GRAY, SCItems.GRAY_SCARECROW);
+        enumMap.put(DyeColor.LIGHT_GRAY, SCItems.LIGHT_GRAY_SCARECROW);
+        enumMap.put(DyeColor.CYAN, SCItems.CYAN_SCARECROW);
+        enumMap.put(DyeColor.PURPLE, SCItems.PURPLE_SCARECROW);
+        enumMap.put(DyeColor.BLUE, SCItems.BLUE_SCARECROW);
+        enumMap.put(DyeColor.BROWN, SCItems.BROWN_SCARECROW);
+        enumMap.put(DyeColor.GREEN, SCItems.GREEN_SCARECROW);
+        enumMap.put(DyeColor.RED, SCItems.RED_SCARECROW);
+        enumMap.put(DyeColor.BLACK, SCItems.BLACK_SCARECROW);
+    });
+    private static final TrackedData<Byte> COLOR = DataTracker.registerData(ScarecrowEntity.class, TrackedDataHandlerRegistry.BYTE);
+    public static final TrackedData<Boolean> FRENCH = DataTracker.registerData(ScarecrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Boolean> HIDE_ARMS = DataTracker.registerData(ScarecrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Boolean> HIDE_POST = DataTracker.registerData(ScarecrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Boolean> MARKER = DataTracker.registerData(ScarecrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Byte> SCARECROW_FLAGS = DataTracker.registerData(ScarecrowEntity.class, TrackedDataHandlerRegistry.BYTE);
+
     private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = (entity) -> entity instanceof AbstractMinecartEntity && ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
+
     private boolean invisible;
     public long lastHitTime;
 
     public ScarecrowEntity(EntityType<? extends ScarecrowEntity> entityType, World world) {
         super(entityType, world);
+
+        this.setColor(DyeColor.CYAN);
         this.stepHeight = 0.0F;
     }
 
     @Override
     public void calculateDimensions() {
-        double d = this.getX();
-        double e = this.getY();
-        double f = this.getZ();
+        double x = this.getX();
+        double y = this.getY();
+        double z = this.getZ();
         super.calculateDimensions();
-        this.updatePosition(d, e, f);
+        this.updatePosition(x, y, z);
     }
 
     private boolean canClip() {
@@ -70,6 +96,11 @@ public class ScarecrowEntity extends LivingEntity {
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(COLOR, (byte)0);
+        this.dataTracker.startTracking(FRENCH, false);
+        this.dataTracker.startTracking(HIDE_ARMS, false);
+        this.dataTracker.startTracking(HIDE_POST, false);
+        this.dataTracker.startTracking(MARKER, false);
         this.dataTracker.startTracking(SCARECROW_FLAGS, (byte)0);
     }
 
@@ -96,12 +127,14 @@ public class ScarecrowEntity extends LivingEntity {
         super.writeCustomDataToTag(tag);
 
         tag.putBoolean("Invisible", this.isInvisible());
-        tag.putBoolean("NoShowArms", this.shouldHideArms());
-        tag.putBoolean("NoPost", this.shouldHidePost());
+        tag.putBoolean("HideArms", this.shouldHideArms());
+        tag.putBoolean("HidePost", this.shouldHidePost());
         if (this.isMarker()) {
             tag.putBoolean("Marker", this.isMarker());
         }
 
+        tag.putByte("Color", (byte)this.getColor().getId());
+        tag.putBoolean("French", this.isFrench());
         tag.putInt("StuckArrowCount", this.getStuckArrowCount());
     }
 
@@ -110,11 +143,13 @@ public class ScarecrowEntity extends LivingEntity {
         super.readCustomDataFromTag(tag);
 
         this.setInvisible(tag.getBoolean("Invisible"));
-        this.setNoShowArms(tag.getBoolean("NoShowArms"));
-        this.setHidePost(tag.getBoolean("NoPost"));
+        this.setHideArms(tag.getBoolean("HideArms"));
+        this.setHidePost(tag.getBoolean("HidePost"));
         this.setMarker(tag.getBoolean("Marker"));
         this.noClip = !this.canClip();
 
+        this.setColor(DyeColor.byId(tag.getByte("Color")));
+        this.setFrench(tag.getBoolean("French"));
         this.setStuckArrowCount(tag.getInt("StuckArrowCount"));
     }
 
@@ -129,7 +164,6 @@ public class ScarecrowEntity extends LivingEntity {
     @Override
     protected void tickCramming() {
         List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox(), RIDEABLE_MINECART_PREDICATE);
-
         for (Entity value : list) {
             if (this.squaredDistanceTo(value) <= 0.2D) {
                 value.pushAwayFrom(this);
@@ -140,7 +174,7 @@ public class ScarecrowEntity extends LivingEntity {
     @Override
     public void tick() {
         super.tick();
-        this.stuckArrowTimer = 2;
+        this.stuckArrowTimer = 2; // prevent arrow 'despawn'
     }
 
     @Override
@@ -173,7 +207,7 @@ public class ScarecrowEntity extends LivingEntity {
                 } else {
                     boolean isPersistentProjectile = source.getSource() instanceof PersistentProjectileEntity;
                     boolean hasPiercing = isPersistentProjectile && ((PersistentProjectileEntity)source.getSource()).getPierceLevel() > 0;
-                    boolean sourceIsPlayer = "player".equals(source.getName());
+                    boolean sourceIsPlayer = source.getSource() instanceof PlayerEntity;
                     if (!sourceIsPlayer && !isPersistentProjectile) {
                         return false;
                     } else if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).abilities.allowModifyWorld) {
@@ -207,14 +241,38 @@ public class ScarecrowEntity extends LivingEntity {
 
     @Override
     public ActionResult interact(PlayerEntity player, Hand hand) {
-        int stuckArrowCount = this.getStuckArrowCount();
-        if (stuckArrowCount > 0) {
+        if (this.isAlive()) {
+            ItemStack handStack = player.getStackInHand(hand);
+            Item handItem = handStack.getItem();
             ItemStack heldStack = player.getMainHandStack();
-            if (heldStack.isEmpty()) {
-                player.setStackInHand(hand, new ItemStack(Items.ARROW, stuckArrowCount));
-                this.setStuckArrowCount(0);
 
+            if (handItem instanceof DyeItem && (this.getColor() != ((DyeItem) handItem).getColor() || this.isFrench())) {
+                if (!player.abilities.creativeMode) {
+                    heldStack.decrement(1);
+                }
+
+                this.setColor(((DyeItem) handItem).getColor(), !player.abilities.creativeMode);
                 return ActionResult.success(this.world.isClient);
+            } else if (handItem == Items.BREAD && !this.isFrench()) {
+                if (!player.abilities.creativeMode) {
+                    heldStack.decrement(1);
+                }
+
+                for(int i = 0; i < 4; i++) {
+                    this.world.addParticle(ParticleTypes.CLOUD, this.getX() + this.random.nextDouble() / 2.0D, this.getBodyY(0.5D), this.getZ() + this.random.nextDouble() / 2.0D, 0.0D, this.random.nextDouble() / 5.0D, 0.0D);
+                }
+                this.playSound(SCSoundEvents.ENTITY_SCARECROW_FRENCHIFY, 1.0F, 1.0F);
+
+                this.setFrench(true);
+                return ActionResult.success(this.world.isClient);
+            } else if (heldStack.isEmpty()) {
+                int stuckArrowCount = this.getStuckArrowCount();
+                if (stuckArrowCount > 0) {
+                    player.setStackInHand(hand, new ItemStack(Items.ARROW, stuckArrowCount));
+                    this.setStuckArrowCount(0);
+
+                    return ActionResult.success(this.world.isClient);
+                }
             }
         }
 
@@ -284,8 +342,9 @@ public class ScarecrowEntity extends LivingEntity {
     }
 
     private void breakAndDropItem(DamageSource damageSource) {
-        Block.dropStack(this.world, this.getBlockPos(), new ItemStack(SCItems.SCARECROW));
+        Block.dropStack(this.world, this.getBlockPos(), new ItemStack(DROPS.get(this.getColor())));
         Block.dropStack(this.world, this.getBlockPos(), new ItemStack(Items.ARROW, this.getStuckArrowCount()));
+        if (this.isFrench()) Block.dropStack(this.world, this.getBlockPos(), new ItemStack(Items.BREAD));
         this.onBreak(damageSource);
     }
 
@@ -312,9 +371,7 @@ public class ScarecrowEntity extends LivingEntity {
 
     @Override
     public void travel(Vec3d movementInput) {
-        if (this.canClip()) {
-            super.travel(movementInput);
-        }
+        if (this.canClip()) super.travel(movementInput);
     }
 
     @Override
@@ -350,35 +407,52 @@ public class ScarecrowEntity extends LivingEntity {
         return this.isMarker() ? PistonBehavior.IGNORE : super.getPistonBehavior();
     }
 
-    private void setNoShowArms(boolean showArms) {
-        this.dataTracker.set(SCARECROW_FLAGS, this.setBitField(this.dataTracker.get(SCARECROW_FLAGS), 4, showArms));
-    }
     public boolean shouldHideArms() {
-        return (this.dataTracker.get(SCARECROW_FLAGS) & 4) != 0;
+        return this.dataTracker.get(HIDE_ARMS);
+    }
+    public void setHideArms(boolean hideArms) {
+        this.dataTracker.set(HIDE_ARMS, hideArms);
     }
 
-    private void setHidePost(boolean hidePost) {
-        this.dataTracker.set(SCARECROW_FLAGS, this.setBitField(this.dataTracker.get(SCARECROW_FLAGS), 8, hidePost));
-    }
     public boolean shouldHidePost() {
-        return (this.dataTracker.get(SCARECROW_FLAGS) & 8) != 0;
+        return this.dataTracker.get(HIDE_POST);
+    }
+    public void setHidePost(boolean hidePost) {
+        this.dataTracker.set(HIDE_POST, hidePost);
     }
 
-    private void setMarker(boolean marker) {
-        this.dataTracker.set(SCARECROW_FLAGS, this.setBitField(this.dataTracker.get(SCARECROW_FLAGS), 16, marker));
-    }
     public boolean isMarker() {
-        return (this.dataTracker.get(SCARECROW_FLAGS) & 16) != 0;
+        return this.dataTracker.get(MARKER);
+    }
+    public void setMarker(boolean isMarker) {
+        this.dataTracker.set(MARKER, isMarker);
     }
 
-    private byte setBitField(byte value, int bitField, boolean set) {
-        if (set) {
-            value = (byte)(value | bitField);
-        } else {
-            value = (byte)(value & ~bitField);
-        }
+    public DyeColor getColor() {
+        return DyeColor.byId(this.dataTracker.get(COLOR) & 15);
+    }
+    public void setColor(DyeColor color, boolean dropBreadIfFrench) {
+        byte b = this.dataTracker.get(COLOR);
+        this.dataTracker.set(COLOR, (byte)(b & 240 | color.getId() & 15));
 
-        return value;
+        if (this.isFrench()) {
+            if (dropBreadIfFrench) Block.dropStack(this.world, this.getBlockPos(), new ItemStack(Items.BREAD));
+            this.setFrench(false);
+        }
+    }
+    public void setColor(DyeColor color) {
+        this.setColor(color, false);
+    }
+
+    public static Map<DyeColor, ItemConvertible> getDrops() {
+        return DROPS;
+    }
+
+    public boolean isFrench() {
+        return this.dataTracker.get(FRENCH);
+    }
+    public void setFrench(boolean isFrench) {
+        this.dataTracker.set(FRENCH, isFrench);
     }
 
     @Override
@@ -416,10 +490,8 @@ public class ScarecrowEntity extends LivingEntity {
 
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
-        if (SCARECROW_FLAGS.equals(data)) {
-            this.calculateDimensions();
-            this.inanimate = !this.isMarker();
-        }
+        this.calculateDimensions();
+        this.inanimate = !this.isMarker();
 
         super.onTrackedDataSet(data);
     }

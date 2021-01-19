@@ -11,6 +11,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -19,8 +20,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class ScarecrowItem extends Item {
-    public ScarecrowItem(Item.Settings settings) {
+    private final DyeColor dyeColor;
+
+    public ScarecrowItem(DyeColor dyeColor, Item.Settings settings) {
         super(settings);
+        this.dyeColor = dyeColor;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class ScarecrowItem extends Item {
                     }
 
                     serverWorld.spawnEntityAndPassengers(entity);
+                    entity.setColor(this.getDyeColor());
                     float f = (float)MathHelper.floor((MathHelper.wrapDegrees(context.getPlayerYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
                     entity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), f, 0.0F);
                     world.spawnEntity(entity);
@@ -56,5 +61,9 @@ public class ScarecrowItem extends Item {
                 return ActionResult.FAIL;
             }
         }
+    }
+
+    public DyeColor getDyeColor() {
+        return this.dyeColor;
     }
 }

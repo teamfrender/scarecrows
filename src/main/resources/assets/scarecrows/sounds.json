@@ -19,5 +19,20 @@
       "scarecrows:entity/scarecrow/hit2"
     ],
     "subtitle": "subtitles.block.generic.hit"
+  },
+  "entity.scarecrow.frenchify": {
+    "sounds": [
+      {
+        "name": "minecraft:mob/ravager/celebrate1",
+        "volume": 1.0,
+        "pitch": 1.65
+      },
+      {
+        "name": "minecraft:mob/ravager/celebrate2",
+        "volume": 1.0,
+        "pitch": 1.65
+      }
+    ],
+    "subtitle": "subtitles.scarecrows.entity.scarecrow.frenchify"
   }
 }
