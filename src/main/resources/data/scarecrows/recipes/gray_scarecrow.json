@@ -1,8 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "scarecrows:scarecrow",
   "pattern": [
     " # ",
-    "C/C",
+    "WCW",
     " / "
   ],
   "key": {
@@ -10,14 +11,17 @@
       "item": "minecraft:carved_pumpkin"
     },
     "C": {
-      "item": "minecraft:cyan_wool"
+      "item": "minecraft:gray_wool"
+    },
+    "W": {
+      "item": "minecraft:wheat"
     },
     "/": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "scarecrows:scarecrow",
-    "count": 1
+    "item": "scarecrows:gray_scarecrow",
+    "count": 2
   }
 }

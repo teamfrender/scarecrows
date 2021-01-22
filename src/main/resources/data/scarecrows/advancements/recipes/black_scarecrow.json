@@ -1,0 +1,65 @@
+{
+  "parent": "scarecrows:recipes/root",
+  "rewards": {
+    "recipes": [
+      "scarecrows:black_scarecrow"
+    ]
+  },
+  "criteria": {
+    "has_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:stick"
+          }
+        ]
+      }
+    },
+    "has_pumpkin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:pumpkin"
+          }
+        ]
+      }
+    },
+    "has_wool": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:black_wool"
+          }
+        ]
+      }
+    },
+    "has_carved_pumpkin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:carved_pumpkin"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "scarecrows:black_scarecrow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick",
+      "has_wool",
+      "has_pumpkin",
+      "has_carved_pumpkin",
+      "has_the_recipe"
+    ]
+  ]
+}

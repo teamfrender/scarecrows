@@ -1,6 +1,5 @@
 package com.frenderman.scarecrows.entity.scarecrow;
 
-import com.frenderman.scarecrows.client.config.SCConfig;
 import com.frenderman.scarecrows.init.SCEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,7 +15,9 @@ import net.minecraft.util.math.MathHelper;
 public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntity, ScarecrowEntityModel> {
     public ScarecrowEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher, new ScarecrowEntityModel(), 0.0F);
+
         this.addFeature(new ScarecrowStuckArrowsFeatureRenderer(this));
+        this.addFeature(new ScarecrowColorDependentFeatureRenderer(this));
     }
 
     @Override
@@ -51,10 +52,13 @@ public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntit
 
     @Override
     public Identifier getTexture(ScarecrowEntity entity) {
-        boolean sadCrow = SCConfig.MISC.sadcrow.getBoolean() && (!entity.isOnGround() || !((entity.world.getTime() - entity.lastHitTime) > 20) || entity.isSubmergedInWater() || entity.isOnFire());
+        return SCEntities.texture(getBasePath());
+    }
 
-        String modifier = sadCrow ? "sad" : "";
-
-        return SCEntities.texture(ScarecrowEntity.id + "/" + ScarecrowEntity.id + (modifier.equals("") ? "" : "_" + modifier));
+    public static Identifier getTexture(String extension) {
+        return SCEntities.texture(getBasePath() + "_" + extension);
+    }
+    private static String getBasePath() {
+        return ScarecrowEntity.id + "/" + ScarecrowEntity.id;
     }
 }
