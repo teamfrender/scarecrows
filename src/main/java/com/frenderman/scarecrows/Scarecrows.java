@@ -27,8 +27,10 @@ public class Scarecrows implements ModInitializer {
     public void onInitialize() {
         log("Initializing");
 
+        new SCGameRules();
         new SCSoundEvents();
 
+        new SCEnchantments();
         new SCItems();
         new SCEntities();
 

@@ -66,6 +66,7 @@ public class ScarecrowEntity extends LivingEntity {
     private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = (entity) -> entity instanceof AbstractMinecartEntity && ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
 
     private boolean invisible;
+    public long lastDamageTime;
     public long lastHitTime;
 
     public ScarecrowEntity(EntityType<? extends ScarecrowEntity> entityType, World world) {
@@ -179,16 +180,19 @@ public class ScarecrowEntity extends LivingEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        this.world.sendEntityStatus(this, (byte)32); // treat as if damaged...
+        this.lastHitTime = this.world.getTime();
+
         if (!this.world.isClient && !this.removed) {
             if (DamageSource.OUT_OF_WORLD.equals(source)) {
                 this.remove();
                 return false;
             } else if (source.isProjectile() || (source.getAttacker() instanceof LivingEntity && ((LivingEntity)source.getAttacker()).getMainHandStack().getItem().isIn(SCItemTags.INEFFECTIVE_SCARECROW_DAMAGERS))) {
                 this.world.sendEntityStatus(this, (byte)32); // treat as if damaged...
-                this.lastHitTime = this.world.getTime();
+                this.lastDamageTime = this.world.getTime();
 
                 return false; // ...but don't actually damage
-            } if (!this.isInvulnerableTo(source) && !this.invisible && !this.isMarker()) {
+            } else if (!this.isInvulnerableTo(source) && !this.invisible && !this.isMarker()) {
                 if (source.isExplosive()) {
                     this.onBreak(source);
                     this.remove();
@@ -206,11 +210,11 @@ public class ScarecrowEntity extends LivingEntity {
                     return false;
                 } else {
                     boolean isPersistentProjectile = source.getSource() instanceof PersistentProjectileEntity;
-                    boolean hasPiercing = isPersistentProjectile && ((PersistentProjectileEntity)source.getSource()).getPierceLevel() > 0;
+                    boolean hasPiercing = isPersistentProjectile && ((PersistentProjectileEntity) source.getSource()).getPierceLevel() > 0;
                     boolean sourceIsPlayer = source.getSource() instanceof PlayerEntity;
                     if (!sourceIsPlayer && !isPersistentProjectile) {
                         return false;
-                    } else if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).abilities.allowModifyWorld) {
+                    } else if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity) source.getAttacker()).abilities.allowModifyWorld) {
                         return false;
                     } else if (source.isSourceCreativePlayer()) {
                         this.playBreakSound();
@@ -219,9 +223,9 @@ public class ScarecrowEntity extends LivingEntity {
                         return hasPiercing;
                     } else {
                         long currentWorldTime = this.world.getTime();
-                        if (currentWorldTime - this.lastHitTime > 5L && !isPersistentProjectile) {
-                            this.world.sendEntityStatus(this, (byte)32);
-                            this.lastHitTime = currentWorldTime;
+                        if (currentWorldTime - this.lastDamageTime > 5L && !isPersistentProjectile) {
+                            this.world.sendEntityStatus(this, (byte) 32);
+                            this.lastDamageTime = currentWorldTime;
                         } else {
                             this.breakAndDropItem(source);
                             this.spawnBreakParticles();
@@ -288,6 +292,7 @@ public class ScarecrowEntity extends LivingEntity {
         if (status == 32) {
             if (this.world.isClient) {
                 this.world.playSound(this.getX(), this.getY(), this.getZ(), SCSoundEvents.ENTITY_SCARECROW_HIT, this.getSoundCategory(), 0.3F, 1.0F, false);
+                this.lastDamageTime = this.world.getTime();
                 this.lastHitTime = this.world.getTime();
             }
         } else {

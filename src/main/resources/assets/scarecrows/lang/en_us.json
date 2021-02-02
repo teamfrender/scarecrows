@@ -4,6 +4,7 @@
   "itemGroup.scarecrows.item_group": "Scarecrows",
 
   "entity.scarecrows.scarecrow": "Scarecrow",
+  "entity.scarecrows.crow": "Crow",
 
   "item.scarecrows.white_scarecrow": "White Scarecrow",
   "item.scarecrows.orange_scarecrow": "Orange Scarecrow",
@@ -21,12 +22,22 @@
   "item.scarecrows.green_scarecrow": "Green Scarecrow",
   "item.scarecrows.red_scarecrow": "Red Scarecrow",
   "item.scarecrows.black_scarecrow": "Black Scarecrow",
+  "item.scarecrows.crow_spawn_egg": "Crow Spawn Egg",
 
   "subtitles.scarecrows.entity.scarecrow.fall": "Scarecrow falls",
   "subtitles.scarecrows.entity.scarecrow.frenchify": "Scarecrow becomes French",
+  "subtitles.scarecrows.entity.crow.ambient": "Crow caws",
+  "subtitles.scarecrows.entity.crow.death": "Crow dies",
+  "subtitles.scarecrows.entity.crow.fly": "Crow flutters",
+  "subtitles.scarecrows.entity.crow.hurt": "Crow hurts",
+
+  "enchantment.scarecrows.distracting": "Distracting",
 
   "config.scarecrows.title": "Scarecrows",
   "config.scarecrows.category.misc": "Miscellaneous",
   "config.scarecrows.category.misc.sadcrow": "Sadcrow",
-  "config.scarecrows.category.misc.sadcrow.tooltip": "Enables/disables the sad skin when a Scarecrow is in danger"
+  "config.scarecrows.category.misc.sadcrow.tooltip": "Enables/disables the sad skin when a Scarecrow is in danger",
+
+  "gamerule.scarecrows.category": "Scarecrows",
+  "gamerule.scarecrows.doCrowSpawns": "Spawn crows"
 }

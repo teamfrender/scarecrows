@@ -25,7 +25,7 @@ public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntit
         matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F - bodyYaw));
         float i = (float)(entity.world.getTime() - entity.lastHitTime) + tickDelta;
         if (i < 5.0F) {
-            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(MathHelper.sin(i / 1.5F * 3.1415927F) * 3.0F));
+            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(MathHelper.sin(i / 5F * 3.1415927F) * 3.0F));
         }
     }
 

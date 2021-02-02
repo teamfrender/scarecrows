@@ -34,5 +34,37 @@
       }
     ],
     "subtitle": "subtitles.scarecrows.entity.scarecrow.frenchify"
+  },
+
+  "entity.crow.ambient": {
+    "sounds": [
+      "scarecrows:entity/crow/idle"
+    ],
+    "subtitle": "subtitles.scarecrows.entity.crow.ambient"
+  },
+  "entity.crow.death": {
+    "sounds": [
+      "scarecrows:entity/crow/death"
+    ],
+    "subtitle": "subtitles.scarecrows.entity.crow.death"
+  },
+  "entity.crow.hurt": {
+    "sounds": [
+      "scarecrows:entity/crow/hurt"
+    ],
+    "subtitle": "subtitles.scarecrows.entity.crow.hurt"
+  },
+  "entity.crow.fly": {
+    "sounds": [
+      "minecraft:mob/parrot/fly1",
+      "minecraft:mob/parrot/fly2",
+      "minecraft:mob/parrot/fly3",
+      "minecraft:mob/parrot/fly4",
+      "minecraft:mob/parrot/fly5",
+      "minecraft:mob/parrot/fly6",
+      "minecraft:mob/parrot/fly7",
+      "minecraft:mob/parrot/fly8"
+    ],
+    "subtitle": "subtitles.scarecrows.entity.crow.fly"
   }
 }

@@ -17,12 +17,12 @@ public class PersistentProjectileEntityMixin {
     @Inject(method = "onEntityHit", at = @At("TAIL"))
     private void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         Entity hitEntity = entityHitResult.getEntity();
-        if (hitEntity instanceof ScarecrowEntity) {
-            PersistentProjectileEntity $this = PersistentProjectileEntity.class.cast(this);
+        PersistentProjectileEntity $this = PersistentProjectileEntity.class.cast(this);
+        if (hitEntity instanceof ScarecrowEntity && $this.pickupType != PersistentProjectileEntity.PickupPermission.DISALLOWED) {
             ScarecrowEntity scarecrowEntity = (ScarecrowEntity)hitEntity;
 
             int newStuckArrow = scarecrowEntity.getStuckArrowCount() + 1;
-            if (newStuckArrow <= scarecrowEntity.getMaxStuckArrowCount() ) {
+            if (newStuckArrow <= scarecrowEntity.getMaxStuckArrowCount()) {
                 scarecrowEntity.setStuckArrowCount(newStuckArrow);
                 $this.remove();
             }
