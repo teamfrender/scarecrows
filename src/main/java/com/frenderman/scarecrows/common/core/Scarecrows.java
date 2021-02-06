@@ -1,18 +1,23 @@
-package com.frenderman.scarecrows;
+package com.frenderman.scarecrows.common.core;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(Scarecrows.MOD_ID)
 public class Scarecrows {
+
     public static final String MOD_ID = "scarecrows";
     public static final String MOD_NAME = "Scarecrows";
+
+    public static Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final ItemGroup ITEM_GROUP = new ItemGroup(MOD_ID) {
         @Override
@@ -21,14 +26,10 @@ public class Scarecrows {
         }
     };
 
-    public static Logger LOGGER = LogManager.getLogger(MOD_ID);
-
     public Scarecrows() {
-        log("Initializing");
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        MinecraftForge.EVENT_BUS.register(this);
 
-        log("Initialized");
     }
 
     public static void log(Level level, String message){

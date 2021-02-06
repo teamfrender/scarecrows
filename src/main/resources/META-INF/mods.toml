@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[31,)"
+loaderVersion = "[35,)"
 license = "https://github.com/teamfrender/scarecrows/blob/HEAD/LICENSE"
 
 [[mods]]
@@ -17,13 +17,14 @@ license = "https://github.com/teamfrender/scarecrows/blob/HEAD/LICENSE"
   displayURL="https://scarecrows.teamfrender.com"
   issueTrackerURL = "https://github.com/teamfrender/scarecrows/issues"
   
-  [[ dependencies.scarecrows ]]
+[[dependencies.scarecrows]]
   modId="forge"
   mandatory=true
-  versionRange="[31.0,)"
+  versionRange="[36.0,)"
   ordering="NONE"
   side="BOTH"
-  [[ dependencies.scarecrows ]]
+
+[[dependencies.scarecrows]]
   modId="minecraft"
   mandatory=true
   versionRange="[1.16,)"
