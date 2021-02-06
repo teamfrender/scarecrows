@@ -1,5 +1,6 @@
 package com.frenderman.scarecrows.common.core;
 
+import com.frenderman.scarecrows.common.register.SCEntities;
 import com.frenderman.scarecrows.common.register.SCItems;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,7 @@ public class Scarecrows {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         SCItems.ITEMS.register(eventBus);
+        SCEntities.ENTITIES.register(eventBus);
     }
 
     public static void log(Level level, String message){
