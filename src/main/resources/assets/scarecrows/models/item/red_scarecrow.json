@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "scarecrows:item/scarecrow"
+    "layer0": "scarecrows:item/red_scarecrow"
   }
 }
