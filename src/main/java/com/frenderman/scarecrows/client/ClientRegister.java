@@ -1,6 +1,6 @@
 package com.frenderman.scarecrows.client;
 
-import com.frenderman.scarecrows.client.renderer.ScarecrowEntityRenderer;
+import com.frenderman.scarecrows.client.renderer.entity.scarecrow.ScarecrowEntityRenderer;
 import com.frenderman.scarecrows.client.screen.ModConfigScreen;
 import com.frenderman.scarecrows.common.core.Scarecrows;
 import com.frenderman.scarecrows.common.register.SCEntities;
@@ -11,8 +11,6 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLLoader;
 
 @Mod.EventBusSubscriber(modid = Scarecrows.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegister {

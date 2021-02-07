@@ -1,9 +1,11 @@
-package com.frenderman.scarecrows.client.renderer.model;
+package com.frenderman.scarecrows.client.renderer.entity.scarecrow;
 
 import com.frenderman.scarecrows.common.entity.ScarecrowEntity;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+
+import java.util.Random;
 
 public class ScarecrowEntityModel<T extends ScarecrowEntity> extends SegmentedModel<T> {
 
@@ -78,6 +80,11 @@ public class ScarecrowEntityModel<T extends ScarecrowEntity> extends SegmentedMo
     @Override
     public Iterable<ModelRenderer> getParts() {
         return ImmutableList.of(this.post, this.body);
+    }
+
+    public ModelRenderer getRandomPart(Random random) {
+        ModelRenderer[] availableParts = new ModelRenderer[]{ post, hat };
+        return availableParts[random.nextInt(availableParts.length)];
     }
 
     @Override

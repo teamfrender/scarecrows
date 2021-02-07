@@ -1,6 +1,5 @@
-package com.frenderman.scarecrows.client.renderer;
+package com.frenderman.scarecrows.client.renderer.entity.scarecrow;
 
-import com.frenderman.scarecrows.client.renderer.model.ScarecrowEntityModel;
 import com.frenderman.scarecrows.common.entity.ScarecrowEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -10,6 +9,7 @@ public class ScarecrowEntityRenderer<T extends ScarecrowEntity> extends LivingRe
 
     public ScarecrowEntityRenderer(EntityRendererManager rendererManager) {
         super(rendererManager, new ScarecrowEntityModel<>(), 0.0F);
+        this.addLayer(new ScarecrowEntityStuckArrowsRenderLayer<>(this));
     }
 
     @Override
