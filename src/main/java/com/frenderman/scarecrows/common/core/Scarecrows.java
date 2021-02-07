@@ -1,13 +1,11 @@
 package com.frenderman.scarecrows.common.core;
 
 import com.frenderman.scarecrows.common.register.SCEntities;
-import com.frenderman.scarecrows.common.register.SCGameRules;
 import com.frenderman.scarecrows.common.register.SCItems;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.world.GameRules;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -32,8 +30,6 @@ public class Scarecrows {
     };
 
     public Scarecrows() {
-        SCGameRules.register();
-
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         eventBus.addListener(this::commonSetup);
@@ -44,6 +40,10 @@ public class Scarecrows {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         SCEntities.registerAttributes();
+    }
+
+    public static ResourceLocation resourceLoc(String path) {
+        return new ResourceLocation(MOD_ID, path);
     }
 
     public static void log(Level level, String message){
