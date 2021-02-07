@@ -17,6 +17,7 @@ public class ScarecrowsConfig {
     public static class Common {
 
         private final ForgeConfigSpec.BooleanValue sadcrow;
+        private final ForgeConfigSpec.BooleanValue doCrowSpawning;
 
         public Common(ForgeConfigSpec.Builder configBuilder) {
             configBuilder.push("general");
@@ -24,11 +25,18 @@ public class ScarecrowsConfig {
             configBuilder.comment("Enables/disables the sad skin when a Scarecrow is in danger.");
             this.sadcrow = configBuilder.define("sadcrow", false);
 
+            configBuilder.comment("Enables/disables crows spawning in the world");
+            this.doCrowSpawning = configBuilder.define("doCrowSpawning", true);
+
             configBuilder.pop();
         }
 
         public boolean sadcrowEnabled() {
             return this.sadcrow.get();
+        }
+
+        public boolean crowSpawningEnabled() {
+            return this.doCrowSpawning.get();
         }
     }
 }
