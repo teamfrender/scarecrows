@@ -16,8 +16,19 @@ public class ScarecrowsConfig {
 
     public static class Common {
 
-        public Common(ForgeConfigSpec.Builder configBuilder) {
+        private final ForgeConfigSpec.BooleanValue sadcrow;
 
+        public Common(ForgeConfigSpec.Builder configBuilder) {
+            configBuilder.push("general");
+
+            configBuilder.comment("Enables/disables the sad skin when a Scarecrow is in danger.");
+            this.sadcrow = configBuilder.define("sadcrow", false);
+
+            configBuilder.pop();
+        }
+
+        public boolean sadcrowEnabled() {
+            return this.sadcrow.get();
         }
     }
 }
