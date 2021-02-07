@@ -1,13 +1,17 @@
 package com.frenderman.scarecrows.common.core;
 
+import com.frenderman.scarecrows.common.core.config.ScarecrowsConfig;
 import com.frenderman.scarecrows.common.register.SCEntities;
 import com.frenderman.scarecrows.common.register.SCItems;
+import com.frenderman.scarecrows.common.register.SCSoundEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Level;
@@ -30,12 +34,15 @@ public class Scarecrows {
     };
 
     public Scarecrows() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ScarecrowsConfig.COMMON_SPEC);
+
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         eventBus.addListener(this::commonSetup);
 
         SCItems.ITEMS.register(eventBus);
         SCEntities.ENTITIES.register(eventBus);
+        SCSoundEvents.SOUNDS.register(eventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
