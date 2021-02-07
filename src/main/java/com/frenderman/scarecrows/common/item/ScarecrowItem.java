@@ -4,7 +4,10 @@ import com.frenderman.scarecrows.common.entity.ScarecrowEntity;
 import com.frenderman.scarecrows.common.register.SCEntities;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -34,7 +37,7 @@ public class ScarecrowItem extends Item {
             Vector3d vec3d = new Vector3d(blockPos.getX(), blockPos.getY(), blockPos.getZ());
             AxisAlignedBB box = SCEntities.SCARECROW.get().getSize().func_242286_a(vec3d);
 
-            if (world.isSpaceEmpty(null, box, (entity) -> true) && world.getOtherEntities(null, box).isEmpty()) {
+            if (world.hasNoCollisions(null, box, (entity) -> true) && world.getEntitiesWithinAABBExcludingEntity(null, box).isEmpty()) {
                 if (world instanceof ServerWorld) {
                     ServerWorld serverWorld = (ServerWorld)world;
                     ScarecrowEntity entity = SCEntities.SCARECROW.get().create(serverWorld, itemStack.getTag(), null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
@@ -42,7 +45,7 @@ public class ScarecrowItem extends Item {
                         return ActionResultType.FAIL;
                     }
 
-                    serverWorld.spawnEntityAndPassengers(entity);
+                    serverWorld.func_242417_l(entity);
                     entity.setColor(this.getDyeColor());
                     float f = (float)MathHelper.floor((MathHelper.wrapDegrees(context.getPlacementYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
                     entity.setPositionAndRotation(entity.getPosX(), entity.getPosY(), entity.getPosZ(), f, 0.0F);
