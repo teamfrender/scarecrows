@@ -53,9 +53,14 @@ public class Scarecrows {
         return new ResourceLocation(MOD_ID, path);
     }
 
+    public static ResourceLocation texture(String path) {
+        return resourceLoc("textures/" + path + ".png");
+    }
+
     public static void log(Level level, String message){
         LOGGER.log(level, "[" + MOD_NAME + "] " + message);
     }
+
     public static void log(String message) {
         log(Level.INFO, message);
     }

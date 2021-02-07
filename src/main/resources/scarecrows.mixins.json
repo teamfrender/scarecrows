@@ -1,9 +1,13 @@
 {
   "required": true,
-  "package": "com.frenderman.scarecrows.mixin",
+  "package": "com.frenderman.scarecrows.common.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [],
-  "client": [],
+  "mixins": [
+    "CropsBlockMixin"
+  ],
+  "client": [
+    "MinecraftMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

@@ -11,9 +11,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -210,8 +208,8 @@ public class ScarecrowEntity extends LivingEntity {
                     this.updateHealth(source, 4.0F);
                     return false;
                 } else {
-                    boolean isArrowProjectile = source.getImmediateSource() instanceof ArrowEntity;
-                    boolean hasPiercing = isArrowProjectile && ((ArrowEntity) source.getImmediateSource()).getPierceLevel() > 0;
+                    boolean isArrowProjectile = source.getImmediateSource() instanceof AbstractArrowEntity;
+                    boolean hasPiercing = isArrowProjectile && ((AbstractArrowEntity) source.getImmediateSource()).getPierceLevel() > 0;
                     boolean sourceIsPlayer = source.getImmediateSource() instanceof PlayerEntity;
                     if (!sourceIsPlayer && !isArrowProjectile) {
                         return false;
