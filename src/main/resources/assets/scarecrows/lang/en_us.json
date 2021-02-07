@@ -23,5 +23,8 @@
   "item.scarecrows.black_scarecrow": "Black Scarecrow",
   "item.scarecrows.crow_spawn_egg": "Crow Spawn Egg",
 
-  "subtitles.scarecrows.entity.scarecrow.fall": "Scarecrow falls"
+  "subtitles.scarecrows.entity.scarecrow.fall": "Scarecrow falls",
+
+  "scarecrows.screen.config.title": "Scarecrows Config",
+  "scarecrows.screen.config.no_button": "No :("
 }
