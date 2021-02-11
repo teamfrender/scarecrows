@@ -1,0 +1,29 @@
+{
+  "parent": "scarecrows:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:chainmail_helmet",
+      "nbt": "{Enchantments:[{}]}"
+    },
+    "title": {
+      "translate": "advancements.scarecrows.distract_entity.title"
+    },
+    "description": {
+      "translate": "advancements.scarecrows.distract_entity.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "distract_entity": {
+      "trigger": "scarecrows:distract_entity"
+    }
+  },
+  "requirements": [
+    [
+      "distract_entity"
+    ]
+  ]
+}

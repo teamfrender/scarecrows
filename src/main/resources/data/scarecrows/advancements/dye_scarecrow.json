@@ -1,0 +1,42 @@
+{
+  "parent": "scarecrows:root",
+  "display": {
+    "icon": {
+      "item": "scarecrows:purple_scarecrow"
+    },
+    "title": {
+      "translate": "advancements.scarecrows.dye_scarecrow.title"
+    },
+    "description": {
+      "translate": "advancements.scarecrows.dye_scarecrow.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dye_scarecrow": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "tag": "scarecrows:dyes"
+        },
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "scarecrows:scarecrow"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dye_scarecrow"
+    ]
+  ]
+}

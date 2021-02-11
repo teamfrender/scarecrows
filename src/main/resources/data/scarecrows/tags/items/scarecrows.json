@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "scarecrows:white_scarecrow",
+    "scarecrows:orange_scarecrow",
+    "scarecrows:magenta_scarecrow",
+    "scarecrows:light_blue_scarecrow",
+    "scarecrows:yellow_scarecrow",
+    "scarecrows:lime_scarecrow",
+    "scarecrows:pink_scarecrow",
+    "scarecrows:gray_scarecrow",
+    "scarecrows:light_gray_scarecrow",
+    "scarecrows:cyan_scarecrow",
+    "scarecrows:purple_scarecrow",
+    "scarecrows:blue_scarecrow",
+    "scarecrows:brown_scarecrow",
+    "scarecrows:green_scarecrow",
+    "scarecrows:red_scarecrow",
+    "scarecrows:black_scarecrow"
+  ]
+}
