@@ -181,6 +181,7 @@ public class ScarecrowEntity extends LivingEntity {
     @Override
     public boolean damage(DamageSource source, float amount) {
         this.world.sendEntityStatus(this, (byte)32); // treat as if damaged...
+        if (!this.isSilent()) this.world.playSound(null, this.getX(), this.getY(), this.getZ(), SCSoundEvents.ENTITY_SCARECROW_HIT, this.getSoundCategory(), 0.3F, 0.8F + 0.4F * this.random.nextFloat());
         this.lastHitTime = this.world.getTime();
 
         if (!this.world.isClient && !this.removed) {
@@ -291,14 +292,12 @@ public class ScarecrowEntity extends LivingEntity {
     public void handleStatus(byte status) {
         if (status == 32) {
             if (this.world.isClient) {
-                this.world.playSound(this.getX(), this.getY(), this.getZ(), SCSoundEvents.ENTITY_SCARECROW_HIT, this.getSoundCategory(), 0.3F, 1.0F, false);
                 this.lastDamageTime = this.world.getTime();
                 this.lastHitTime = this.world.getTime();
             }
         } else {
             super.handleStatus(status);
         }
-
     }
 
     @Override
