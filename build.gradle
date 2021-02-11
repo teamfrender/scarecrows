@@ -36,9 +36,9 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     // runtime utils
-    modRuntime ("com.github.joaoh1:OkZoomer:master-SNAPSHOT") { exclude ( group: "net.fabricmc.fabric-api" ) }
+    modRuntime ("com.github.joaoh1:OkZoomer:${project.okzoomer_version}") { exclude ( group: "net.fabricmc.fabric-api" ) }
     modRuntime ("com.github.jellysquid3:sodium-fabric:${project.sodium_version}") { exclude ( group: "net.fabricmc.fabric-api" ) }
-    // modRuntime ("com.github.jellysquid3:lithium-fabric:${project.lithium_version}") { exclude ( group: "net.fabricmc.fabric-api" ) }
+    modRuntime ("com.github.jellysquid3:lithium-fabric:${project.lithium_version}") { exclude ( group: "net.fabricmc.fabric-api" ) }
     modRuntime ("com.github.jellysquid3:phosphor-fabric:${project.phosphor_version}") { exclude ( group: "net.fabricmc.fabric-api" ) }
 
     // cloth config

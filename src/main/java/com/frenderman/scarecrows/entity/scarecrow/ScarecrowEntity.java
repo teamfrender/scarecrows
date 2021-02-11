@@ -515,7 +515,7 @@ public class ScarecrowEntity extends LivingEntity {
     @Environment(EnvType.CLIENT)
     public Vec3d method_31166(float tickDelta) {
         if (this.isMarker()) {
-            Box box = this.getDimensions(this.getPose()).method_30757(this.getPos());
+            Box box = this.getDimensions(this.getPose()).getBoxAt(this.getPos());
             BlockPos blockPos = this.getBlockPos();
             int i = Integer.MIN_VALUE;
 

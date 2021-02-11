@@ -38,7 +38,7 @@ public class ScarecrowItem extends Item {
             BlockPos blockPos = itemPlacementContext.getBlockPos();
             ItemStack itemStack = context.getStack();
             Vec3d vec3d = Vec3d.ofBottomCenter(blockPos);
-            Box box = SCEntities.SCARECROW.getDimensions().method_30231(vec3d.getX(), vec3d.getY(), vec3d.getZ());
+            Box box = SCEntities.SCARECROW.getDimensions().getBoxAt(vec3d);
             if (world.isSpaceEmpty(null, box, (entity) -> true) && world.getOtherEntities(null, box).isEmpty()) {
                 if (world instanceof ServerWorld) {
                     ServerWorld serverWorld = (ServerWorld)world;
