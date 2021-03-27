@@ -20,7 +20,7 @@ public class ScarecrowColorDependentFeatureRenderer extends FeatureRenderer<Scar
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ScarecrowEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         Identifier skin = ScarecrowEntityRenderer.getTexture(
-            SCConfig.MISC.sadcrow.getBoolean()
+            SCConfig.MISC.sadcrow.value
                 ? "sad"
                 : entity.isFrench()
                     ? "f" /* la baguette */ + "re" /* hon hon hon */ + "nch"
