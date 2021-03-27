@@ -35,7 +35,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -86,11 +85,12 @@ public class CrowEntity extends AnimalEntity implements Flutterer {
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25D));
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new CrowEntity.FleeEntityAirGoal<>(this, ScarecrowEntity.class, 8.0F, 1.0D));
+        this.goalSelector.add(1, new CrowEntity.FleeEntityAirGoal<>(this, ScarecrowEntity.class, 8.0F, 3.75D));
+        this.goalSelector.add(1, new CrowEntity.FleeEntityAirGoal<>(this, PlayerEntity.class, 8.0F, 3.75D));
         this.goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(2, new LookAtEntityGoal(this, ScarecrowEntity.class, 8.0F));
         this.goalSelector.add(2, new LookAtEntityGoal(this, VillagerEntity.class, 8.0F));
-        this.goalSelector.add(3, new CrowEntity.FlyOntoCropGoal(this, 1.2D, 1.0F));
+        this.goalSelector.add(3, new CrowEntity.FlyOntoCropGoal(this, 1.5D, 1.0F));
         this.goalSelector.add(4, new FlyOntoTreeGoal(this, 1.5D));
     }
 
